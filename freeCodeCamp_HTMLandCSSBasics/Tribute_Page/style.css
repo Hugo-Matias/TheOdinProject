@@ -1,0 +1,48 @@
+:root {
+  font-family: "Anaheim", sans-serif;
+}
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #eee;
+  margin: 3vw 1vw;
+  border-radius: 1vw;
+}
+p {
+  font-weight: 100;
+}
+h1,
+h2 {
+  font-family: "Alata", sans-serif;
+}
+h1 {
+  font-size: 2.2rem;
+}
+h2 {
+  font-size: 1.2rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+figure {
+  margin: 2vw 2vw;
+}
+#img-div {
+  background-color: white;
+  margin: 0 3vw;
+}
+#image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  padding: 1vw 0;
+}
+#tribute-info {
+  max-width: 600px;
+  text-align: left;
+}
+#quote {
+  padding: 3vw;
+  font-style: italic;
+}
