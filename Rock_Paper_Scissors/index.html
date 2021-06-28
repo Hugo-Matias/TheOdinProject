@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <script>
+        function computerPlay() {
+          options = ['rock', 'paper', 'scissor'];
+          return options[Math.floor(Math.random() * 3)]
+        };
+        function playRound(playerSelection, computerSelection) {
+          let state;
+          let message;
+          p = playerSelection.toLowerCase()
+          c = computerSelection.toLowerCase()
+          if (p == c) {
+              state = 'd'
+          }
+          else if ((p == 'rock' && c == 'paper') || (p == 'paper' && c == 'scissor')){
+              state = 'l'
+          }
+          else {
+              state = 'w'
+          }
+          return state;
+        //   switch (state) {
+        //       case 'w':
+        //           message = `You Win! ${playerSelection} beats ${computerSelection}`;
+        //           break;
+
+        //       case 'l':
+        //             message = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        //           break;
+              
+        //       case 'd':
+        //           message = `Draw! Both players selected ${computerSelection}`;
+        //           break;
+        //   }
+        //   return message
+        }
+        function play() {
+          let player_score = 0;
+          let computer_score = 0;
+          const player = 'rock';
+          for (let i = 0; i < 5; i++) {
+                const computer = computerPlay();
+              let result = playRound(player, computer);
+              switch (result) {
+                  case 'w':
+                     player_score ++; 
+                      break;
+              
+                  case 'l':
+                    computer_score ++;
+                      break;
+                  
+                default:
+                  break;
+              }
+            }
+          if (player_score > computer_score){
+              console.log(`Victory! You win ${player_score} - ${computer_score}.`)
+          }
+          else if (player_score < computer_score) {
+              console.log(`Defeat! Computer wins ${player_score} - ${computer_score}.`)
+          }
+          else {
+              console.log(`Draw! ${player_score} - ${computer_score}`)
+          }
+        }
+        play()
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
