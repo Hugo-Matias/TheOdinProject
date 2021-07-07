@@ -5,75 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors</title>
-    <script>
-        function computerPlay() {
-          options = ['rock', 'paper', 'scissor'];
-          return options[Math.floor(Math.random() * 3)]
-        };
-        function playRound(playerSelection, computerSelection) {
-          let state;
-          let message;
-          p = playerSelection.toLowerCase()
-          c = computerSelection.toLowerCase()
-          if (p == c) {
-              state = 'd'
-          }
-          else if ((p == 'rock' && c == 'paper') || (p == 'paper' && c == 'scissor')){
-              state = 'l'
-          }
-          else {
-              state = 'w'
-          }
-          return state;
-        //   switch (state) {
-        //       case 'w':
-        //           message = `You Win! ${playerSelection} beats ${computerSelection}`;
-        //           break;
-
-        //       case 'l':
-        //             message = `You Lose! ${computerSelection} beats ${playerSelection}`;
-        //           break;
-              
-        //       case 'd':
-        //           message = `Draw! Both players selected ${computerSelection}`;
-        //           break;
-        //   }
-        //   return message
-        }
-        function play() {
-          let player_score = 0;
-          let computer_score = 0;
-          const player = 'rock';
-          for (let i = 0; i < 5; i++) {
-                const computer = computerPlay();
-              let result = playRound(player, computer);
-              switch (result) {
-                  case 'w':
-                     player_score ++; 
-                      break;
-              
-                  case 'l':
-                    computer_score ++;
-                      break;
-                  
-                default:
-                  break;
-              }
-            }
-          if (player_score > computer_score){
-              console.log(`Victory! You win ${player_score} - ${computer_score}.`)
-          }
-          else if (player_score < computer_score) {
-              console.log(`Defeat! Computer wins ${player_score} - ${computer_score}.`)
-          }
-          else {
-              console.log(`Draw! ${player_score} - ${computer_score}`)
-          }
-        }
-        play()
-    </script>
 </head>
 <body>
-    
+  <h1 id="title">Rock, Paper, Scissors!</h1>
+  <br>
+  <p>Select your play:</p>
+  <div id="buttons">
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+  </div>
+  <h4>Scores:</h4>
+  <p id="scorePlayer">Player: </p>
+  <p id="scoreCPU">CPU: </p>
+  <p id="result"></p>
+  <br>
+  <h3 id="gameResult"></h3>
+
+  <script>
+      function computerPlay() {
+        options = ['rock', 'paper', 'scissors'];
+        return options[Math.floor(Math.random() * 3)];
+      };
+
+      function playRound(playerSelection) {
+        let state;
+        let message;
+        p = playerSelection.toLowerCase();
+        c = computerPlay();
+        if (p == c) {
+            state = 'd';
+        }
+        else if ((p == 'rock' && c == 'paper') || (p == 'paper' && c == 'scissors')){
+            state = 'l';
+        }
+        else {
+            state = 'w';
+        }
+        return state;
+      }
+
+      function checkWinner() {
+        const result = document.querySelector('#gameResult');
+        if(scorePlayer < 5 && scoreCPU < 5) {
+          result.textContent = '';
+          return;
+        }
+
+        if (scorePlayer >= 5){
+          result.textContent = `You Win! ${scorePlayer} - ${scoreCPU}`;
+        } else if (scoreCPU >= 5) {
+          result.textContent = `You Lose! ${scorePlayer} - ${scoreCPU}`;
+        }
+        scorePlayer = 0;
+        scoreCPU = 0;
+      }
+
+      function updateScores(){
+        const player = document.querySelector('#scorePlayer');
+        const cpu = document.querySelector('#scoreCPU');
+        
+        player.textContent = `Player: ${scorePlayer}`;
+        cpu.textContent = `CPU: ${scoreCPU}`;
+      }
+
+      let scorePlayer = 0;
+      let scoreCPU = 0;
+      const buttons = document.querySelectorAll('button');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const game = playRound(btn.id);
+          const result = document.querySelector('#result');
+
+          if (game == 'w') {
+            result.textContent = 'Win!';
+            scorePlayer ++;
+          } else if (game == 'l'){
+            result.textContent = 'Lose!';
+            scoreCPU ++;
+          } else {
+            result.textContent = 'Draw!';
+          }
+
+          updateScores();
+          checkWinner();
+        });
+      });
+  </script>
 </body>
 </html>
