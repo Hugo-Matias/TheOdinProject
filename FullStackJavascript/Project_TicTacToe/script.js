@@ -25,6 +25,8 @@ const gameboard = (() => {
 })();
 
 const gameManager = (() => {
+  const gameOverScreenTimeout = 500;
+
   // DOM Caching
   const blocks = document.querySelector(".board").querySelectorAll(".block");
   const winScreen = document.querySelector(".win-screen");
@@ -49,12 +51,12 @@ const gameManager = (() => {
       board = [...gameboard.getBoard()];
       const score = evaluateBoard(board);
       if (score == 10) {
-        gameOverScreen(p1);
+        setTimeout(() => gameOverScreen(p1), gameOverScreenTimeout);
       } else if (score == -10) {
-        gameOverScreen(p2);
+        setTimeout(() => gameOverScreen(p2), gameOverScreenTimeout);
       } else {
         if (isGameOver(board)) {
-          gameOverScreen();
+          setTimeout(() => gameOverScreen(), gameOverScreenTimeout);
         } else {
           if (activePlayer == p1) {
             aiPlay(getMove(board));
@@ -134,10 +136,6 @@ const gameManager = (() => {
   const minimax = (board, depth, isMax) => {
     if (isGameOver(board)) {
       let boardScore = evaluateBoard(board);
-      // console.log(board);
-      // console.log(boardScore);
-      // console.log(depth);
-      // console.log(isMax);
       if (isMax) boardScore -= depth;
       else boardScore += depth;
       return boardScore;
