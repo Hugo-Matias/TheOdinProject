@@ -1,17 +1,19 @@
 let library = [];
 const libStorageKey = "library";
 
-function Book(title, author, pages, isRead) {
-  this.id = Math.random().toString(16).substr(2, 16);
-  this.title = title;
-  this.author = author != "" ? author : "Desconhecido";
-  this.pages = pages != "" ? pages : 0;
-  this.isRead = isRead;
-}
+class Book {
+  constructor(title, author, pages, isRead) {
+    this.id = Math.random().toString(16).substr(2, 16);
+    this.title = title;
+    this.author = author != "" ? author : "Desconhecido";
+    this.pages = pages != "" ? pages : 0;
+    this.isRead = isRead;
+  }
 
-Book.prototype.toggleRead = function () {
-  this.isRead = !this.isRead;
-};
+  toggleRead = () => {
+    this.isRead = !this.isRead;
+  };
+}
 
 function addBookToLibrary() {
   createBook();
@@ -83,6 +85,7 @@ function manageReadStatus(e) {
     (book) => book.id === bookCard.getAttribute("data-id")
   );
   book.toggleRead();
+  saveStorage();
 }
 
 function toggleReadBtn(btn) {
@@ -100,16 +103,8 @@ function populateLibrary() {
   const books = bookshelf.querySelectorAll(".book");
 
   books.forEach((book) => bookshelf.removeChild(book));
-  // If there is no Id on the library book object it means the book was lodaded from localStorage, we need to recreate the object in order to give it it's required functionality via proto inheritance
-  library.forEach((book) => {
-    if (!book.id) {
-      library[book] = new Book(
-        book.title,
-        book.author,
-        book.pages,
-        book.isRead
-      );
-    }
+  library.forEach((book, index) => {
+    library[index] = new Book(book.title, book.author, book.pages, book.isRead);
   });
   library.forEach((book) => createBookCard(book));
 }
@@ -136,7 +131,7 @@ function initializeUi() {
     .querySelector(".overlay");
   addFormOverlay.addEventListener("click", toggleModal);
 
-  const addForm= document.querySelector(".modal");
+  const addForm = document.querySelector(".modal");
   addForm.addEventListener("submit", (e, _) => {
     e.preventDefault();
     addBookToLibrary();
