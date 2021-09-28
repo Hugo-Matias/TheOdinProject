@@ -1,1 +1,6 @@
-console.log("THIS IS A TEST!");
+import loadPage from "./loadPage";
+import "./style.css";
+
+(function load() {
+  loadPage();
+})();
